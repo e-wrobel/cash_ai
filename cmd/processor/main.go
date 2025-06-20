@@ -24,7 +24,7 @@ func main() {
 	proc := service.New(store, bus)
 	prov := mockprovider.New(providerURL)
 
-	// echo everything published (sample subscriber)
+	// Subscriber.
 	go func() {
 		for e := range bus.Subscribe() {
 			log.Printf("event %s – %s", e.Kind, e.Transaction.ID)

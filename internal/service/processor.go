@@ -10,7 +10,7 @@ import (
 type Processor struct {
 	store *repository.EventStore
 	bus   *pubsub.Bus
-	// fast projection of latest state
+	// Fast projection of latest state.
 	state map[string]domain.Transaction
 }
 

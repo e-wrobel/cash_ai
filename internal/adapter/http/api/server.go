@@ -46,7 +46,7 @@ func (s *Server) fetchOnce() error {
 		seen[tx.ID] = struct{}{}
 		s.proc.Apply(tx)
 	}
-	// delete missing
+	// Delete missing transactions.
 	for id := range s.proc.StateIDs() {
 		if _, ok := seen[id]; !ok {
 			s.proc.Delete(id)
@@ -57,7 +57,7 @@ func (s *Server) fetchOnce() error {
 
 func (s *Server) Serve(addr string, interval time.Duration) error {
 	s.routes()
-	// background polling
+	// Background polling.
 	go func() {
 		t := time.NewTicker(interval)
 		for range t.C {
