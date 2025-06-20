@@ -2,6 +2,7 @@
 
 
 ## Key features
+```text
 • Pulls transaction batches from a mock provider, on schedule or via HTTP trigger
 • Stores immutable transaction events (event‑sourcing) so that any point‑in‑time
 state can be rebuilt ("replay")
@@ -9,6 +10,7 @@ state can be rebuilt ("replay")
 asynchronous processing (e.g. categorisation, ML, …)
 • Clean, hexagonal layout: core domain has no external dependencies; adapters live
 under internal/adapter; wiring happens in cmd/processor/main.go
+```
 
 ## Running locally
 ```bash
