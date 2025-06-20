@@ -13,10 +13,12 @@ under internal/adapter; wiring happens in cmd/processor/main.go
 ## Running locally
 ```bash
   make build    # build executable for ./bin/processor
-  make run      # starts mock provider & processor
+  make run      # starts  processor
   make mock     # starts mock provider only
   make test     # starts unit tests
 ```
+
+Remark: Remember to run the mock provider first, as the processor depends on it.
 ## Usage
 ```bash
   curl -XPOST localhost:8080/trigger/fetch   # manual
