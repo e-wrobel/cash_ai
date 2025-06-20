@@ -51,3 +51,6 @@ Steps:
 	Created / updated → update state
 	Deleted → remove from state
 ```
+
+## Sequence diagram and swagger spec
+Please take a look at the sequence diagram in the `docs` folder for a visual representation of the process flow.
