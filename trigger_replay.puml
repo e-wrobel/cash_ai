@@ -1,0 +1,23 @@
+@startuml replay
+actor User
+participant "HTTP Server" as API
+participant "Processor Service" as Processor
+participant "EventStore" as Store
+
+== Trigger replay ==
+User -> API : POST /replay
+API -> Processor : Replay()
+
+Processor -> Store : All()
+Store -> Processor : []Event
+
+loop for each event
+    alt Event{created|updated}
+        Processor -> Processor : state[event.ID] = event.Transaction
+    else Event{deleted}
+        Processor -> Processor : delete state[event.ID]
+    end
+end
+
+API -> User : 200 OK
+@enduml

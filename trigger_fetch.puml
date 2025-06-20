@@ -1,0 +1,29 @@
+@startuml
+actor User
+participant "HTTP Server" as API
+participant "Mock Provider Client" as Provider
+participant "Processor Service" as Processor
+participant "EventStore" as Store
+participant "PubSub Bus" as Bus
+
+== Trigger fetch ==
+User -> API : POST /trigger/fetch
+API -> Provider : GET /transactions
+Provider -> API : []Transaction
+
+API -> Processor : Apply(Transaction)
+loop for each tx
+    Processor -> Store : Append(Event{created|updated})
+    Processor -> Bus : Publish(Event)
+end
+
+== Detect deleted transactions ==
+API -> Processor : StateIDs()
+loop for missing IDs
+    API -> Processor : Delete(id)
+    Processor -> Store : Append(Event{deleted})
+    Processor -> Bus : Publish(Event)
+end
+
+API -> User : 202 Accepted
+@enduml

@@ -1,0 +1,29 @@
+openapi: 3.0.3
+info:
+  title: Cash AI – Transaction Processor API
+  description: >
+    HTTP API for triggering transaction synchronization and replaying state
+    from the event store.
+  version: 1.0.0
+
+paths:
+  /trigger/fetch:
+    post:
+      summary: Trigger transaction synchronization from provider
+      description: >
+        Triggers the processor to fetch transactions from the mock provider,
+        compare them with the current state, and apply changes (create, update, delete).
+      responses:
+        '202':
+          description: Fetch started successfully
+        '500':
+          description: Error fetching or processing transactions
+
+  /replay:
+    post:
+      summary: Replay event history to rebuild state
+      description: >
+        Rebuilds the in-memory state from the full list of historical events in the event store.
+      responses:
+        '200':
+          description: Replay completed successfully
