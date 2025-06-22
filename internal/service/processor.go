@@ -9,12 +9,12 @@ import (
 
 type Processor struct {
 	store *repository.EventStore
-	bus   *pubsub.Bus
+	bus   pubsub.PubSub
 	// Fast projection of latest state.
 	state map[string]domain.Transaction
 }
 
-func New(store *repository.EventStore, bus *pubsub.Bus) *Processor {
+func New(store *repository.EventStore, bus pubsub.PubSub) *Processor {
 	return &Processor{store: store, bus: bus, state: map[string]domain.Transaction{}}
 }
 
@@ -27,7 +27,7 @@ func (p *Processor) Apply(tx domain.Transaction) {
 	case !cur.Equal(tx):
 		p.emit(event.Updated, tx)
 	default:
-		// unchanged – nothing
+		// Unchanged – nothing to do.
 	}
 }
 
