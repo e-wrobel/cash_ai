@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"math/rand"
@@ -20,6 +21,8 @@ type Transaction struct {
 }
 
 // generateMockTransactions returns a list of mock transactions with some inconsistencies
+//
+//nolint:staticcheck
 func generateMockTransactions() []Transaction {
 	staticTransactions := []Transaction{
 		{ID: "txn-12345", UserID: "user-1", Amount: 100.50, Type: "credit", Timestamp: time.Now().Add(-10 * time.Minute).Unix()},
@@ -53,7 +56,7 @@ func generateMockTransactions() []Transaction {
 }
 
 func randomID() string {
-	return time.Now().Format("20060102150405") + string(rand.Intn(100))
+	return time.Now().Format("20060102150405") + fmt.Sprint(rune(rand.Intn(100)))
 }
 
 func randomType() string {
@@ -61,6 +64,7 @@ func randomType() string {
 	return types[rand.Intn(len(types))]
 }
 
+//nolint:errcheck
 func transactionsHandler(w http.ResponseWriter, r *http.Request) {
 	transactions := generateMockTransactions()
 	w.Header().Set("Content-Type", "application/json")

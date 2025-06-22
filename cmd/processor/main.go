@@ -13,12 +13,15 @@ import (
 )
 
 func main() {
+	// Mock Provider URL and pull interval.
 	providerURL := getenv("PROVIDER_URL", "http://localhost:9000")
 	interval, err := time.ParseDuration(getenv("PULL_INTERVAL", "30s"))
 	if err != nil {
 		log.Fatalf("bad PULL_INTERVAL: %v", err)
 	}
 
+	// Initialize components.
+	// Event store, service and mock provider.
 	store := repository.NewEventStore()
 	bus := pubsub.New()
 	proc := service.New(store, bus)

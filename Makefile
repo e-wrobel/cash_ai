@@ -23,5 +23,13 @@ mock: ## Run the mock transaction provider
 clean: ## Remove generated binaries
 	rm -rf $(BIN_DIR)
 
+install:
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	go install golang.org/x/tools/cmd/goimports@latest
+
+fix:
+	golangci-lint run  ./... --fix
+	goimports -w .
+
 help: ## Show help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile | awk 'BEGIN {FS = \":.*?## \"}; {printf \"\033[36m%-12s\033[0m %s\\n\", $$1, $$2}'

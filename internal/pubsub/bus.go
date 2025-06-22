@@ -35,3 +35,8 @@ func (b *Bus) Publish(e event.Event) {
 		}
 	}
 }
+
+type PubSub interface {
+	Subscribe() <-chan event.Event
+	Publish(event.Event)
+}

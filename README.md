@@ -8,12 +8,14 @@
 state can be rebuilt ("replay")
 • Publishes every domain event on an in‑memory Pub/Sub bus to decouple further
 asynchronous processing (e.g. categorisation, ML, …)
-• Clean, hexagonal layout: core domain has no external dependencies; adapters live
+• Clean, semi-hexagonal layout: core domain has no external dependencies; adapters live
 under internal/adapter; wiring happens in cmd/processor/main.go
 ```
 
 ## Running locally
 ```bash
+  make install  # Install linter and code formatter tools
+  make fix      # Automatically fix linter errors and format code
   make build    # build executable for ./bin/processor
   make run      # starts  processor
   make mock     # starts mock provider only
